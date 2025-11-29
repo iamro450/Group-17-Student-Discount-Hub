@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Discount Hub</title>
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Minimal helpers for loading spinner and toasts -->
+    <style>
+        @keyframes spin { to { transform: rotate(360deg) } }
+
+        /* loading overlay */
+        #loading-overlay {
+            position: fixed; inset: 0; background: rgba(0,0,0,.45);
+            display: none; align-items: center; justify-content: center; z-index: 9998;
+        }
+        #loading-overlay .spinner {
+            width: 36px; height: 36px; border-radius: 50%;
+            border: 4px solid rgba(0,0,0,.15); border-top-color: #1976d2;
+            animation: spin .8s linear infinite;
+        }
+
+        /* toasts */
+        #toast-root {
+            position: fixed; right: 16px; bottom: 16px;
+            display: flex; flex-direction: column; gap: 10px; z-index: 9999;
+        }
+        .toast {
+            min-width: 260px; max-width: 360px; background: #fff; color: #000;
+            border: 1px solid #d0d0d0; border-radius: 10px; padding: 10px;
+            box-shadow: 0 6px 16px rgba(0,0,0,.12);
+        }
+    </style>
+</head>
+<body>
+
+<!-- Header -->
+<header>
+    <h1>Student Discount Hub</h1>
+    <nav>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#discounts">Discounts</a></li>
+            <li><a href="#submit">Submit Discount</a></li>
+        </ul>
+    </nav>
+</header>
+
+<!-- Main Content -->
+<main>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <h2>Welcome!</h2>
+        <p>Your one-stop spot for student discounts shared by students.</p>
+    </section>
+
+    <!-- Auth Section -->
+    <section id="auth-section" class="auth-section">
+        <div id="login-box" class="auth-box">
+            <h2>Login</h2>
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="login-username">Username</label>
+                    <input type="text" id="login-username" required>
+                </div>
+                <div class="form-group">
+                    <label for="login-password">Password</label>
+                    <input type="password" id="login-password" required>
+                </div>
+                <button type="submit" class="btn-submit">Login</button>
+                <p class="auth-switch">Don't have an account? <a href="#" id="show-register">Register</a></p>
+            </form>
+        </div>
+
+        <div id="register-box" class="auth-box" style="display: none;">
+            <h2>Register</h2>
+            <form id="register-form">
+                <div class="form-group">
+                    <label for="register-username">Username</label>
+                    <input type="text" id="register-username" required>
+                </div>
+                <div class="form-group">
+                    <label for="register-password">Password</label>
+                    <input type="password" id="register-password" required>
+                </div>
+                <button type="submit" class="btn-submit">Register</button>
+                <p class="auth-switch">Already have an account? <a href="#" id="show-login">Login</a></p>
+            </form>
+        </div>
+    </section>
+
+    <!-- Discount Section -->
+    <section id="discounts" class="discount-section">
+        <h2>Available Discounts</h2>
+
+        <!-- ============================= -->
+        <!-- FILTER BAR ADDED HERE -->
+        <!-- ============================= -->
+        <div class="filter-bar">
+            <button class="filter-btn active" data-category="All">All</button>
+            <button class="filter-btn" data-category="Tech">Tech</button>
+            <button class="filter-btn" data-category="Food">Food</button>
+            <button class="filter-btn" data-category="Music">Music</button>
+            <button class="filter-btn" data-category="Games">Games</button>
+            <button class="filter-btn" data-category="Entertainment">Entertainment</button>
+            <button class="filter-btn" data-category="Household">Household</button>
+            <button class="filter-btn" data-category="Learning">Learning</button>
+            <button class="filter-btn" data-category="Fitness">Fitness</button>
+        </div>
+        <!-- ============================= -->
+
+        <div id="discount-list">
+            <p class="placeholder">Discount listings will appear here once connected to the database.</p>
+        </div>
+    </section>
+
+    <!-- Submit Discount Section -->
+    <section id="submit" class="submit-section">
+        <h2>Submit a Discount</h2>
+        <p class="placeholder">Click the button below to submit a discount (It only appears if logged in)</p>
+        <button id="show-form-btn" class="btn-submit">Submit a Discount</button>
+        <button id="logout-btn" class="btn-submit" style="display:none;background:#dc3545;margin-left:10px;">Logout</button>
+    </section>
+</main>
+
+<!-- Modal Form -->
+<div id="form-modal" class="modal">
+    <div class="modal-content">
+        <span class="close-modal">&times;</span>
+        <h2>Submit a Discount</h2>
+
+        <div class="success-message" id="success-message">
+            ✓ Discount saved locally! Check console for details.
+        </div>
+
+        <form id="add-form" class="discount-form">
+            <div class="form-group"><label for="title">Discount Title *</label><input type="text" id="title" required></div>
+            <div class="form-group"><label for="description">Description *</label><textarea id="description" required></textarea></div>
+            <div class="form-group"><label for="url">Website URL *</label><input type="url" id="url" required></div>
+
+            <div class="form-group">
+                <label for="category">Category *</label>
+                <select id="category" required>
+                    <option value="Tech">Tech</option>
+                    <option value="Food">Food</option>
+                    <option value="Music">Music</option>
+                    <option value="Games">Games</option>
+                    <option value="Entertainment">Entertainment</option>
+                    <option value="Household">Household</option>
+                    <option value="Learning">Learning</option>
+                    <option value="Fitness">Fitness</option>
+                </select>
+            </div>
+
+            <div class="form-group"><label for="tags">Tags *</label><input type="text" id="tags" required></div>
+            <div class="form-group"><label for="expires-at">Expires At *</label><input type="date" id="expires-at" required></div>
+
+            <div class="form-group checkbox-group">
+                <input type="checkbox" id="student-only">
+                <label for="student-only">Requires Student ID/Email *</label>
+            </div>
+
+            <button type="submit" class="btn-submit">Submit Discount</button>
+        </form>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer>
+    <p>&copy; 2025 Student Discount Hub | Built by Students, for Students</p>
+</footer>
+
+<script src="app.js"></script>
+
+<div id="toast-root"></div>
+
+<div id="loading-overlay">
+    <div class="spinner"></div>
+</div>
+
+<!-- Discount Detail Modal -->
+<div id="detail-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);align-items:center;justify-content:center;z-index:9997;">
+    <div id="detail-card" class="card" style="max-width:720px;margin:0 16px;max-height:80vh;overflow:auto;">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;">
+            <h2 id="detail-title" style="margin:0;">Discount</h2>
+            <button id="detail-close">Close</button>
+        </div>
+        <div id="detail-meta" class="badges"></div>
+        <p id="detail-desc" style="margin:.5rem 0 0"></p>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px;">
+            <div><strong>Company</strong><div id="detail-company"></div></div>
+            <div><strong>Amount</strong><div id="detail-amount"></div></div>
+            <div><strong>Applies To</strong><div id="detail-applies"></div></div>
+            <div><strong>Expires</strong><div id="detail-expires"></div></div>
+        </div>
+    </div>
+</div>
+
+<!-- Helper Functions -->
+<script>
+    function showToast(type='info', title='Notice', msg=''){
+        const root=document.getElementById('toast-root');
+        const t=document.createElement('div');
+        t.className=`toast ${type}`;
+        t.innerHTML=`<div style="font-weight:700;margin-bottom:4px">${title}</div><div>${msg}</div>`;
+        root.appendChild(t);
+        setTimeout(()=>t.remove(),4000);
+    }
+
+    function showLoading(){ document.getElementById('loading-overlay').style.display='flex'; }
+    function hideLoading(){ document.getElementById('loading-overlay').style.display='none'; }
+
+    function attachDetailHandlers(cards, records){
+        const overlay=document.getElementById('detail-overlay');
+        const closeBtn=document.getElementById('detail-close');
+        if(closeBtn) closeBtn.onclick=()=> overlay.style.display='none';
+
+        cards.forEach((node,i)=>{
+            node.style.cursor='pointer';
+            node.addEventListener('click',()=>{
+                const f=records[i]?.fields || {};
+                document.getElementById('detail-title').textContent=f.Title || 'Discount';
+                document.getElementById('detail-desc').textContent=f.Description || '';
+                document.getElementById('detail-company').textContent=f.Company || f.Title || '';
+                document.getElementById('detail-amount').textContent=f['Discount amount'] || f.Amount || '';
+                document.getElementById('detail-applies').textContent=f['What the discount applies to'] || f.Applies || '';
+                document.getElementById('detail-expires').textContent=f['Expiration date'] || f.Expires || 'N/A';
+
+                const meta=document.getElementById('detail-meta');
+                meta.innerHTML='';
+                if(f.Category){ let b=document.createElement('span'); b.className='badge'; b.textContent=f.Category; meta.appendChild(b); }
+                if(f.Approved===true){ let b=document.createElement('span'); b.className='badge'; b.textContent='Approved'; meta.appendChild(b); }
+                if(f['Current Status']){ let b=document.createElement('span'); b.className='badge'; b.textContent=f['Current Status']; meta.appendChild(b); }
+
+                overlay.style.display='flex';
+            });
+        });
+    }
+</script>
+</body>
+</html>

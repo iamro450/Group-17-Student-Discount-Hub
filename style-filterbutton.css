@@ -1,0 +1,391 @@
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+}
+
+header {
+    background-color: #004aad;
+    color: white;
+    padding: 1em 0;
+    text-align: center;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin: 0 15px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+}
+
+section {
+    padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+footer {
+    background-color: #f1f1f1;
+    text-align: center;
+    padding: 10px;
+    margin-top: 40px;
+}
+
+/* ===== Discount Cards ===== */
+
+.discount-card {
+    background: #fff;
+    padding: 16px;
+    margin: 15px 0;
+    border-radius: 10px;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+    transition: transform 0.15s ease;
+}
+
+.discount-card:hover {
+    transform: translateY(-3px);
+}
+
+.discount-card h3 {
+    margin-top: 0;
+    color: #004aad;
+}
+
+.description {
+    margin: 8px 0;
+}
+
+.meta {
+    font-size: 0.9em;
+    color: #555;
+    line-height: 1.4;
+}
+
+.status {
+    font-weight: bold;
+}
+
+.status.active {
+    color: #2ecc71;
+}
+
+.status.expired {
+    color: #c0392b;
+}
+
+.tags {
+    margin-top: 8px;
+}
+
+.tag {
+    background: #e6efff;
+    color: #004aad;
+    padding: 3px 8px;
+    border-radius: 6px;
+    font-size: 0.8em;
+    margin-right: 5px;
+}
+
+.offer-link a {
+    display: inline-block;
+    margin-top: 10px;
+    text-decoration: none;
+    background: #28a745;
+    color: #fff;
+    padding: 6px 12px;
+    border-radius: 6px;
+    transition: background 0.2s;
+}
+
+.offer-link a:hover {
+    background: #1e7e34;
+}
+
+.discount-card.expired {
+    opacity: 0.6;
+}
+
+.placeholder {
+    text-align: center;
+    color: #888;
+    font-style: italic;
+}
+
+.error {
+    color: #c0392b;
+    font-weight: bold;
+}
+
+/* ===== Submit Section ===== */
+
+.submit-section {
+    text-align: center;
+}
+
+.btn-submit {
+    background: #004aad;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 6px;
+    font-size: 1em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+    margin-top: 10px;
+}
+
+.btn-submit:hover {
+    background: #003180;
+}
+
+/* ===== Modal Styles ===== */
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 5% auto;
+    padding: 30px;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 600px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    position: relative;
+}
+
+.modal-content h2 {
+    margin-top: 0;
+    color: #004aad;
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.close-modal {
+    color: #aaa;
+    float: right;
+    font-size: 32px;
+    font-weight: bold;
+    line-height: 1;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.close-modal:hover,
+.close-modal:focus {
+    color: #000;
+}
+
+/* ===== Form Styles (inside modal) ===== */
+
+.success-message {
+    background-color: #d4edda;
+    color: #155724;
+    padding: 15px 20px;
+    border-radius: 8px;
+    margin-bottom: 25px;
+    display: none;
+    border: 1px solid #c3e6cb;
+    font-weight: 500;
+}
+
+.discount-form {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.form-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #333;
+    font-size: 0.95em;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #e0e0e0;
+    border-radius: 6px;
+    font-size: 1em;
+    font-family: Arial, sans-serif;
+    transition: border-color 0.3s;
+    box-sizing: border-box;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: #004aad;
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+    line-height: 1.5;
+}
+
+.checkbox-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.checkbox-group input[type="checkbox"] {
+    width: auto;
+    cursor: pointer;
+    margin: 0;
+}
+
+.checkbox-group label {
+    margin: 0;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.modal-content .btn-submit {
+    width: 100%;
+    margin-top: 10px;
+}
+
+/* ===== Auth Section ===== */
+
+.auth-section {
+    max-width: 400px;
+    margin: 20px auto;
+    padding: 20px;
+}
+
+.auth-box {
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+}
+
+.auth-box h2 {
+    text-align: center;
+    color: #004aad;
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+.auth-switch {
+    text-align: center;
+    margin-top: 15px;
+    font-size: 0.9em;
+}
+
+.auth-switch a {
+    color: #004aad;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.auth-switch a:hover {
+    text-decoration: underline;
+}
+
+/* ===== Responsive Design ===== */
+
+@media (max-width: 768px) {
+    nav ul li {
+        display: block;
+        margin: 10px 0;
+    }
+
+    .modal-content {
+        width: 95%;
+        margin: 5% auto;
+    }
+}
+
+/* =============================
+   CATEGORY FILTER BAR
+   ============================= */
+
+.filter-bar {
+    margin: 12px auto 20px;
+    max-width: 800px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+    justify-content: center;
+}
+
+.filter-btn {
+    border: none;
+    padding: 8px 14px;
+    border-radius: 999px;
+    background: #e6efff;
+    color: #004aad;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.08);
+    white-space: nowrap;
+}
+
+.filter-btn:hover {
+    background: #d0e0ff;
+}
+
+.filter-btn.active {
+    background: #004aad;
+    color: #ffffff;
+    box-shadow: 0 0 10px rgba(0, 74, 173, 0.7);
+}
+
+@keyframes spin { to { transform: rotate(360deg) } }
+
+        /* loading overlay */
+        #loading-overlay {
+            position: fixed; inset: 0; background: rgba(0,0,0,.45);
+            display: none; align-items: center; justify-content: center; z-index: 9998;
+        }
+        #loading-overlay .spinner {
+            width: 36px; height: 36px; border-radius: 50%;
+            border: 4px solid rgba(0,0,0,.15); border-top-color: #1976d2;
+            animation: spin .8s linear infinite;
+        }
+
+        /* toasts */
+        #toast-root {
+            position: fixed; right: 16px; bottom: 16px;
+            display: flex; flex-direction: column; gap: 10px; z-index: 9999;
+        }
+        .toast {
+            min-width: 260px; max-width: 360px; background: #fff; color: #000;
+            border: 1px solid #d0d0d0; border-radius: 10px; padding: 10px;
+            box-shadow: 0 6px 16px rgba(0,0,0,.12);
+        }
